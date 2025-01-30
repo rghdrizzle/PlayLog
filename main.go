@@ -58,7 +58,7 @@ func main(){
   LoadGameLogFile()
   gameList := tview.NewTextView().SetDynamicColors(true).SetWordWrap(true)
 
-  gameList.SetBorder(true).SetTitle("List of Games")
+  gameList.SetBorder(true).SetTitle("PlayLog!")
 
   refreshGameList := func(){
     gameList.Clear()
@@ -66,7 +66,7 @@ func main(){
       fmt.Fprintln(gameList,"No items in Play log")
     }else{
       for i, game := range GameLog{
-        fmt.Fprintf(gameList,"[%d] %s (Status: %d) (Score: %d/10)",i+1,game.Name, game.Status, game.Score)
+        fmt.Fprintf(gameList,"[%d] %s (Status: %s) (Score: %d/10)",i+1,game.Name, game.Status, game.Score)
       }
     }
     
@@ -88,6 +88,7 @@ func main(){
         fmt.Printf("Invalid score")
         return
       }
+      fmt.Printf(status)
       GameLog = append(GameLog, Game{Name:name,Status:status,Score:scoreInt})
       SaveGameLog()
       refreshGameList()
@@ -101,7 +102,7 @@ func main(){
 				return
       }
       id , err := strconv.Atoi(idStr)
-      if err!=nil || id<1 || id>=len(GameLog){
+      if err!=nil || id<1 || id>len(GameLog){
         fmt.Fprintln(gameList, "Invalid game ID")
         return
       }
@@ -117,6 +118,7 @@ func main(){
   flex := tview.NewFlex().AddItem(gameList,0,1,true).AddItem(form,0,2,false)
 
   refreshGameList()
+  tview.NewImage()
 
   app.EnableMouse(true)
 
