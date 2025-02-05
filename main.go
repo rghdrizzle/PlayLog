@@ -66,7 +66,7 @@ func main(){
       fmt.Fprintln(gameList,"No items in Play log")
     }else{
       for i, game := range GameLog{
-        fmt.Fprintf(gameList,"[%d] %s (Status: %s) (Score: %d/10)",i+1,game.Name, game.Status, game.Score)
+        fmt.Fprintf(gameList,"[%d] %s (Status: %s) (Score: %d/10)\n",i+1,game.Name, game.Status, game.Score)
       }
     }
     
